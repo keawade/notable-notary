@@ -1,5 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { IHashedPassword } from 'src/auth/interfaces';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 
@@ -18,8 +19,10 @@ export class UsersService {
     });
   }
 
-  async create(user: { username: string; password: string }) {
-    const { password, ...createdUser } = await this.usersRepository.save(User.create(user));
+  async create(user: { username: string; password: IHashedPassword }) {
+    const { passwordHash: password, ...createdUser } = await this.usersRepository.save(
+      User.create(user),
+    );
 
     return createdUser;
   }

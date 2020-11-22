@@ -1,3 +1,4 @@
+import { IHashedPassword } from 'src/auth/interfaces';
 import {
   Column,
   CreateDateColumn,
@@ -14,9 +15,12 @@ export class User {
   @Column({ unique: true })
   username: string;
 
-  // TODO: Salt and hash password
   @Column()
-  password: string;
+  passwordHash: string;
+  @Column()
+  passwordSalt: string;
+  @Column()
+  passwordSaltIterations: number;
 
   @CreateDateColumn()
   created: string;
@@ -25,11 +29,14 @@ export class User {
   modified: string;
 
   // TODO: Salt and hash password
-  public static create(user: { username: string; password: string }) {
+  public static create(user: { username: string; password: IHashedPassword }) {
     const newUser = new User();
+
     newUser.username = user.username;
-    // TODO: Salt and hash password
-    newUser.password = user.password;
+
+    newUser.passwordHash = user.password.hash;
+    newUser.passwordSalt = user.password.salt;
+    newUser.passwordSaltIterations = user.password.iterations;
 
     return newUser;
   }

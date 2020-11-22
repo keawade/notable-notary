@@ -1,4 +1,4 @@
-import { Controller, Request, Post, UseGuards, Get, Body } from '@nestjs/common';
+import { Controller, Request, Post, UseGuards, Get, Body, Req } from '@nestjs/common';
 import { AuthService } from './auth/auth.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { LocalAuthGuard } from './auth/local-auth.guard';
@@ -26,6 +26,9 @@ export class AppController {
 
   @Post('auth/register')
   async register(@Body() body) {
-    return this.authService.register({ username: body.username, password: body.password });
+    return await this.authService.register({
+      username: body.username,
+      password: body.password,
+    });
   }
 }
