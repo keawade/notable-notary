@@ -1,9 +1,14 @@
 import express from 'express';
+import { PORT } from './constants';
 
 const app = express();
 
+app.set('view engine', 'pug');
+
 app.get('/', (req, res) => {
-  res.send('This is only a test.');
+  res.render('index', { title: 'Howdy', message: 'This is only a test.' });
 });
 
-app.listen(process.env.PORT ?? 8080);
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});

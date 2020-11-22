@@ -25,6 +25,7 @@ FROM node:14.15.1-slim as runtime
 # Copy compiled code from builder
 COPY --from=builder /app /app
 WORKDIR /app
+COPY views views
 
 ## Configure image
 ENV NODE_ENV=production
