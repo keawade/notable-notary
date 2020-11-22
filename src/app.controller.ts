@@ -1,18 +1,31 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { AppService } from './app.service';
-import { INote } from './notes';
+import { Controller, Request, Post, UseGuards, Get, Body } from '@nestjs/common';
+import { AuthService } from './auth/auth.service';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { LocalAuthGuard } from './auth/local-auth.guard';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private authService: AuthService) {}
 
-  @Get('notes')
-  getNotes(): INote[] {
-    return this.appService.getAllNotes();
+  @Get()
+  getHello(): string {
+    return 'hello world';
   }
 
-  @Get('note/:id')
-  getNote(@Param('id') id: string): INote {
-    return this.appService.getNote(id);
+  @UseGuards(LocalAuthGuard)
+  @Post('auth/login')
+  async login(@Request() req) {
+    return this.authService.login(req.user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
+  }
+
+  @Post('auth/register')
+  async register(@Body() body) {
+    return this.authService.register({ username: body.username, password: body.password });
   }
 }

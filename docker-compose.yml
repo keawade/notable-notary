@@ -4,5 +4,15 @@ services:
   notable-notary:
     build:
       context: .
+    env_file:
+      - .env.application.env
+      - .env.database.env
     ports:
       - '8080:8080'
+
+  postgres:
+    image: postgres:12
+    restart: always
+    env_file: .env.database.env
+    ports:
+      - '5432:5432'

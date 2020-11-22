@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { notes } from './notes';
 
 describe('AppController', () => {
   let appController: AppController;
@@ -17,8 +16,8 @@ describe('AppController', () => {
 
   describe('/note', () => {
     it('should return note', () => {
-      const expected = notes[0];
-      const actual = appController.getNote('73834b0f-414f-4688-8a9a-fb37cdd466fd');
+      const expected = 'hello world';
+      const actual = appController.getHello();
 
       expect(actual).toStrictEqual(expected);
     });
