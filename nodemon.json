@@ -1,0 +1,9 @@
+{
+  "ignore": ["test", ".git", "node_modules"],
+  "watch": ["src"],
+  "exec": "npm run dev",
+  "ext": "ts,pug",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

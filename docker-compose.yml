@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  notable-notary:
+    build:
+      context: .
+    ports:
+      - '8080:8080'
