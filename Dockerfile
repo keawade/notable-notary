@@ -5,12 +5,12 @@ RUN mkdir -p /app
 WORKDIR /app
 
 # Install dependencies
-COPY package.json package-lock.json ./
+COPY package*.json ./
 RUN npm ci
 
 # Copy application code
 COPY src src
-COPY tsconfig.json tsconfig.json
+COPY tsconfig*.json ./
 
 # Build
 RUN npm run build
