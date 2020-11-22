@@ -2,7 +2,7 @@
   "ignore": ["test", ".git", "node_modules"],
   "watch": ["src", "views"],
   "exec": "npm run start",
-  "ext": "ts,pug",
+  "ext": "ts",
   "env": {
     "NODE_ENV": "development"
   }

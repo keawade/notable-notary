@@ -1,12 +1,15 @@
 import express from 'express';
 import { PORT } from './constants';
+import { notes } from './notes';
 
 const app = express();
 
-app.set('view engine', 'pug');
+app.get('/notes', (req, res) => {
+  res.send(notes);
+});
 
-app.get('/', (req, res) => {
-  res.render('index', { title: 'Howdy', message: 'This is only a test.' });
+app.get('/note', (req, res) => {
+  res.send(notes[1]);
 });
 
 app.listen(PORT, () => {
