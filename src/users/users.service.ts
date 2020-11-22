@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IHashedPassword } from 'src/auth/interfaces';
 import { Repository } from 'typeorm';
@@ -10,6 +10,8 @@ export class UsersService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
   ) {}
+
+  private logger = new Logger(UsersService.name);
 
   async findOne(username: string): Promise<User | undefined> {
     return this.usersRepository.findOne({
@@ -24,6 +26,7 @@ export class UsersService {
       User.create(user),
     );
 
+    this.logger.debug(`Successfully created user: '${user.username}'`);
     return createdUser;
   }
 }
