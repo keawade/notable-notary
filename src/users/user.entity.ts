@@ -1,4 +1,4 @@
-import { IHashedPassword } from 'src/auth/interfaces';
+import { IHashedPassword } from '../auth/interfaces';
 import {
   Column,
   CreateDateColumn,

@@ -17,8 +17,11 @@ export class AuthService {
       const match = await bcrypt.compare(password, user.passwordHash);
       if (match) {
         const {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           passwordHash: password,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           passwordSalt,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           passwordSaltIterations,
           ...authenticatedUser
         } = user;
@@ -45,18 +48,16 @@ export class AuthService {
   async register(user: { username: string; password: string }) {
     const hashedPassword = await this.hashPassword(user.password);
 
-    const { passwordSalt, passwordSaltIterations, ...createdUser } = await this.usersService.create(
-      {
-        username: user.username,
-        password: hashedPassword,
-      },
-    );
+    const createdUser = await this.usersService.create({
+      username: user.username,
+      password: hashedPassword,
+    });
 
     this.logger.debug(`User successfully registered: '${createdUser.username}'`);
     return this.login(createdUser);
   }
 
-  async hashPassword(
+  private async hashPassword(
     unhashedPassword: string,
     hashOptions?: { salt: string; iterations: number },
   ): Promise<IHashedPassword> {

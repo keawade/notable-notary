@@ -1,6 +1,6 @@
-import { ConflictException, Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IHashedPassword } from 'src/auth/interfaces';
+import { IHashedPassword } from '../auth/interfaces';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 
@@ -22,9 +22,15 @@ export class UsersService {
   }
 
   async create(user: { username: string; password: IHashedPassword }) {
-    const { passwordHash: password, ...createdUser } = await this.usersRepository.save(
-      User.create(user),
-    );
+    const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      passwordHash,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      passwordSalt,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      passwordSaltIterations,
+      ...createdUser
+    } = await this.usersRepository.save(User.create(user));
 
     this.logger.debug(`Successfully created user: '${user.username}'`);
     return createdUser;
